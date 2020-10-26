@@ -11,7 +11,7 @@
         "@babel/core": "7.2.2",
         "@navjobs/upload": "^3.2.0",
         "@svgr/webpack": "4.1.0",
-        "antd": "^3.16.2",
+        "antd": "^3.20.7",
         "axios": "^0.18.0",
         "babel-core": "7.0.0-bridge.0",
         "babel-eslint": "9.0.0",

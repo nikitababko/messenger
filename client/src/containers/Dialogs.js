@@ -26,13 +26,14 @@ const Dialogs = ({
         setValue(value);
     };
 
-    // useEffect(() => {
-    //   if (!items.length) {
-    //     fetchDialogs();
-    //   } else {
-    //     setFiltredItems(items);
-    //   }
-    // }, [items]);
+    // Получаем список диалогов
+    useEffect(() => {
+        if (!items.length) {
+            fetchDialogs();
+        } else {
+            setFiltredItems(items);
+        }
+    }, [items]);
 
     return (
         <BaseDialogs
