@@ -29,7 +29,7 @@ const RegisterForm = (props) => {
                         <FormField
                             name="email"
                             icon="mail"
-                            placeholder="E-mail"
+                            placeholder="E-Mail"
                             handleChange={handleChange}
                             handleBlur={handleBlur}
                             touched={touched}

@@ -9,7 +9,7 @@ export interface IUser extends Document {
     password?: string;
     confirmed?: boolean;
     avatar?: string;
-    confirm_hash?: string | any;
+    confirm_hash?: string;
     last_seen?: Date;
 }
 
@@ -58,11 +58,6 @@ UserSchema.pre("save", function (next) {
 
     if (!user.isModified("password")) return next();
 
-    /**
-     * Сперва один промис сработал, он забил хеш,
-     * далее второй промис сработал, так же забил хеш
-     * и только тогда уже перешел на слежующий шаг (на остальные роуты)
-     */
     generatePasswordHash(user.password)
         .then((hash) => {
             user.password = String(hash);

@@ -2,31 +2,54 @@ import React, { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 
 import { messagesActions } from "redux/actions";
+import socket from "core/socket";
+
 import { Messages as BaseMessages } from "components";
 
-const Dialogs = ({ currentDialogId, fetchMessages, items, isLoading }) => {
-  const messagesRef = useRef(null);
+const Dialogs = ({
+    currentDialogId,
+    fetchMessages,
+    addMessage,
+    items,
+    user,
+    isLoading,
+}) => {
+    const messagesRef = useRef(null);
 
-  useEffect(() => {
-    if (currentDialogId) {
-      fetchMessages(currentDialogId);
-    }
-  }, [currentDialogId]);
+    const onNewMessage = (data) => {
+        addMessage(data);
+    };
 
-  useEffect(() => {
-    messagesRef.current.scrollTo(0, 999999);
-  }, [items]);
+    useEffect(() => {
+        if (currentDialogId) {
+            fetchMessages(currentDialogId);
+        }
 
-  return (
-    <BaseMessages blockRef={messagesRef} items={items} isLoading={isLoading} />
-  );
+        socket.on("SERVER:NEW_MESSAGE", onNewMessage);
+
+        return () => socket.removeListener("SERVER:NEW_MESSAGE", onNewMessage);
+    }, [currentDialogId]);
+
+    useEffect(() => {
+        messagesRef.current.scrollTo(0, 999999);
+    }, [items]);
+
+    return (
+        <BaseMessages
+            user={user}
+            blockRef={messagesRef}
+            items={items}
+            isLoading={isLoading}
+        />
+    );
 };
 
 export default connect(
-  ({ dialogs, messages }) => ({
-    currentDialogId: dialogs.currentDialogId,
-    items: messages.items,
-    isLoading: messages.isLoading
-  }),
-  messagesActions
+    ({ dialogs, messages, user }) => ({
+        currentDialogId: dialogs.currentDialogId,
+        items: messages.items,
+        isLoading: messages.isLoading,
+        user: user.data,
+    }),
+    messagesActions
 )(Dialogs);

@@ -10,11 +10,11 @@ class MessageController {
         this.io = io;
     }
 
-    index = (req: express.Request | any, res: express.Response | any) => {
+    index = (req: express.Request, res: express.Response) => {
         const dialogId: any = req.query.dialog;
 
         MessageModel.find({ dialog: dialogId })
-            .populate(["dialog"])
+            .populate(["dialog", "user"])
             .exec(function (err, messages) {
                 if (err) {
                     return res.status(404).json({
@@ -39,7 +39,7 @@ class MessageController {
         message
             .save()
             .then((obj: any) => {
-                obj.populate("dialog", (err: any, message: any) => {
+                obj.populate(["dialog", "user"], (err: any, message: any) => {
                     if (err) {
                         return res.status(500).json({
                             status: "error",

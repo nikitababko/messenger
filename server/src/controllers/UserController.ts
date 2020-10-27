@@ -41,7 +41,6 @@ class UserController {
                     message: "User not found",
                 });
             }
-            console.log(user.isOnline);
             res.json(user);
         });
     };
@@ -90,7 +89,7 @@ class UserController {
             });
     };
 
-    verify = (req: express.Request, res: express.Response) => {
+    verify = (req: express.Request | any, res: express.Response) => {
         const hash = req.query.hash;
 
         if (!hash) {
@@ -143,7 +142,7 @@ class UserController {
 
             if (bcrypt.compareSync(postData.password, user.password)) {
                 const token = createJWToken(user);
-                res.status(404).json({
+                res.json({
                     status: "success",
                     token,
                 });

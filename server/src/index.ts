@@ -14,6 +14,6 @@ dotenv.config();
 
 createRoutes(app, io);
 
-http.listen(process.env.PORT, function() {
-  console.log(`Server: http://localhost:${process.env.PORT}`);
+http.listen(process.env.PORT, function () {
+    console.log(`Server: http://localhost:${process.env.PORT}`);
 });

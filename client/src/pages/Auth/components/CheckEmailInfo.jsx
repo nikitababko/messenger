@@ -20,7 +20,7 @@ const renderTextInfo = (hash, verified) => {
     } else {
         return {
             status: "success",
-            message: "Ссылка с подтверждением аккаунта отправлена на ваш E-mail.",
+            message: "Ссылка с подтверждением аккаунта отправлена на E-Mail.",
         };
     }
 };
@@ -45,7 +45,7 @@ const CheckEmailInfo = ({ location, history }) => {
             <Block>
                 <Result
                     status={info.status}
-                    title={info.status === "success" ? "Готово!" : "Ошибка!"}
+                    title={info.status === "success" ? "Готово!" : "Ошибка"}
                     subTitle={info.message}
                     extra={
                         info.status === "success" &&

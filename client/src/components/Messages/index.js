@@ -7,29 +7,35 @@ import { Message } from "../";
 
 import "./Messages.scss";
 
-const Messages = ({ blockRef, isLoading, items }) => {
-  return (
-    <div
-      ref={blockRef}
-      className={classNames("messages", { "messages--loading": isLoading })}
-    >
-      {isLoading ? (
-        <Spin size="large" tip="Загрузка сообщений..." />
-      ) : items && !isLoading ? (
-        items.length > 0 ? (
-          items.map(item => <Message key={item._id} {...item} />)
-        ) : (
-          <Empty description="Диалог пуст" />
-        )
-      ) : (
-        <Empty description="Откройте диалог" />
-      )}
-    </div>
-  );
+const Messages = ({ blockRef, isLoading, items, user }) => {
+    return (
+        <div
+            ref={blockRef}
+            className={classNames("messages", { "messages--loading": isLoading })}
+        >
+            {isLoading ? (
+                <Spin size="large" tip="Загрузка сообщений..." />
+            ) : items && !isLoading ? (
+                items.length > 0 ? (
+                    items.map((item) => (
+                        <Message
+                            key={item._id}
+                            {...item}
+                            isMe={user._id === item.user._id}
+                        />
+                    ))
+                ) : (
+                    <Empty description="Диалог пуст" />
+                )
+            ) : (
+                <Empty description="Откройте диалог" />
+            )}
+        </div>
+    );
 };
 
 Messages.propTypes = {
-  items: PropTypes.array
+    items: PropTypes.array,
 };
 
 export default Messages;
