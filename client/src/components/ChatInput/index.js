@@ -51,11 +51,11 @@ const ChatInput = (props) => {
                         className: "chat-input__actions-upload-btn",
                     }}
                     uploadProps={{
-                        accept: ".jpg,.jpeg,.png,.gif,.bmp",
+                        accept: ".rar,.tar,.doc,.docx,.jpg,.jpeg,.png,.gif,.bmp",
                         multiple: "multiple",
                     }}
                 >
-                    <Button type="link" shape="circle" icon="camera" />
+                    <Button type="link" shape="circle" icon="upload" />
                 </UploadField>
                 {value ? (
                     <Button type="link" shape="circle" icon="check-circle" />
