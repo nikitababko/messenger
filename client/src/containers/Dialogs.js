@@ -6,13 +6,7 @@ import socket from "core/socket";
 
 import { Dialogs as BaseDialogs } from "components";
 
-const Dialogs = ({
-    fetchDialogs,
-    currentDialogId,
-    setCurrentDialogId,
-    items,
-    userId,
-}) => {
+const Dialogs = ({ fetchDialogs, currentDialogId, items, userId }) => {
     const [inputValue, setValue] = useState("");
     const [filtred, setFiltredItems] = useState(Array.from(items));
 
@@ -42,11 +36,6 @@ const Dialogs = ({
 
     useEffect(() => {
         fetchDialogs();
-        // if (!items.length) {
-        //   fetchDialogs();
-        // } else {
-        //   setFiltredItems(items);
-        // }
 
         // Обновление диалогов в реалтайм
         socket.on("SERVER:DIALOG_CREATED", fetchDialogs);
@@ -63,7 +52,6 @@ const Dialogs = ({
             items={filtred}
             onSearch={onChangeInput}
             inputValue={inputValue}
-            onSelectDialog={setCurrentDialogId}
             currentDialogId={currentDialogId}
         />
     );

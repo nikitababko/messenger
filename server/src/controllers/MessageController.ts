@@ -2,7 +2,6 @@ import express from "express";
 import socket from "socket.io";
 
 import { MessageModel, DialogModel } from "../models";
-import { IDialog } from "../models/Dialog";
 
 class MessageController {
     io: socket.Server;
@@ -11,14 +10,31 @@ class MessageController {
         this.io = io;
     }
 
-    index = (req: express.Request, res: express.Response) => {
+    index = (req: express.Request | any, res: express.Response) => {
         const dialogId: any = req.query.dialog;
+        const userId = req.user._id;
+
+        MessageModel.updateMany(
+            { dialog: dialogId, user: { $ne: userId } },
+            // @ts-ignore
+            { $set: { readed: true } },
+            (err: any) => {
+                if (err) {
+                    console.log(err);
+                    return res.status(500).json({
+                        status: "error",
+                        message: err,
+                    });
+                }
+            }
+        );
 
         MessageModel.find({ dialog: dialogId })
             .populate(["dialog", "user"])
             .exec(function (err, messages) {
                 if (err) {
                     return res.status(404).json({
+                        status: "error",
                         message: "Messages not found",
                     });
                 }
@@ -90,7 +106,8 @@ class MessageController {
                 MessageModel.findOne(
                     { dialog: dialogId },
                     {},
-                    // { sort: { created_at: -1 } },
+                    // @ts-ignore
+                    { sort: { created_at: -1 } },
                     (err, lastMessage) => {
                         if (err) {
                             res.status(500).json({
