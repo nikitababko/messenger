@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { Upload, Modal } from "antd";
 
@@ -11,90 +11,62 @@ function getBase64(file) {
     });
 }
 
-class UploadFiles extends React.Component {
-    state = {
+const UploadFiles = ({ attachments }) => {
+    const [state, setState] = useState({
         previewVisible: false,
         previewImage: "",
-        fileList: [
-            {
-                uid: "-1",
-                name: "image.png",
-                status: "done",
-                url:
-                    "https://res.cloudinary.com/df02rg1e9/image/upload/v1604408641/images/ahly15craeue8ydhrh2m.jpg",
-            },
-            {
-                uid: "-2",
-                name: "image.png",
-                status: "done",
-                url:
-                    "https://res.cloudinary.com/df02rg1e9/image/upload/v1604408641/images/ahly15craeue8ydhrh2m.jpg",
-            },
-            {
-                uid: "-3",
-                name: "image.png",
-                status: "done",
-                url:
-                    "https://res.cloudinary.com/df02rg1e9/image/upload/v1604408641/images/ahly15craeue8ydhrh2m.jpg",
-            },
-            {
-                uid: "-4",
-                name: "image.png",
-                status: "done",
-                url:
-                    "https://res.cloudinary.com/df02rg1e9/image/upload/v1604408641/images/ahly15craeue8ydhrh2m.jpg",
-            },
-            {
-                uid: "-5",
-                name: "image.png",
-                status: "done",
-                url:
-                    "https://res.cloudinary.com/df02rg1e9/image/upload/v1604408641/images/ahly15craeue8ydhrh2m.jpg",
-            },
-        ],
-    };
+        fileList: attachments,
+    });
 
-    handleCancel = () => this.setState({ previewVisible: false });
+    useEffect(() => {
+        setState({
+            ...state,
+            fileList: attachments,
+        });
+    }, [attachments]);
 
-    handlePreview = async (file) => {
+    const handleCancel = () => setState({ ...state, previewVisible: false });
+
+    const handlePreview = async (file) => {
         if (!file.url && !file.preview) {
             file.preview = await getBase64(file.originFileObj);
         }
 
-        this.setState({
+        setState({
+            ...state,
             previewImage: file.url || file.preview,
             previewVisible: true,
         });
     };
 
-    handleChange = ({ fileList }) => this.setState({ fileList });
+    const handleChange = ({ fileList }) => setState({ ...state, fileList });
 
-    render() {
-        const { previewVisible, previewImage, fileList } = this.state;
+    return (
+        <div className="clearfix">
+            <Upload
+                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                listType="picture-card"
+                fileList={state.fileList}
+                onPreview={handlePreview}
+                onChange={handleChange}
+            ></Upload>
+            <Modal
+                visible={state.previewVisible}
+                footer={null}
+                onCancel={handleCancel}
+            >
+                <img
+                    alt="example"
+                    style={{ width: "100%" }}
+                    src={state.previewImage}
+                />
+            </Modal>
+        </div>
+    );
+};
 
-        return (
-            <div className="clearfix">
-                <Upload
-                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                    listType="picture-card"
-                    fileList={fileList}
-                    onPreview={this.handlePreview}
-                    onChange={this.handleChange}
-                ></Upload>
-                <Modal
-                    visible={previewVisible}
-                    footer={null}
-                    onCancel={this.handleCancel}
-                >
-                    <img
-                        alt="example"
-                        style={{ width: "100%" }}
-                        src={previewImage}
-                    />
-                </Modal>
-            </div>
-        );
-    }
-}
+UploadFiles.defaultProps = {
+    attachments: [],
+};
 
 export default UploadFiles;

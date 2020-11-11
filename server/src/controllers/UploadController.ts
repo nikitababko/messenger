@@ -1,12 +1,13 @@
 import express from "express";
-import { UploadedFileModel } from "../models";
+import { UploadFileModel } from "../models";
 
 class UserController {
     create = (req: express.Request | any, res: express.Response) => {
         console.log(req.file);
-        const userId = req.user._id;
 
+        const userId = req.user._id;
         const file: any = req.file;
+
         const fileData = {
             filename: file.originalname,
             size: file.bytes,
@@ -14,9 +15,10 @@ class UserController {
             url: file.path,
             user: userId,
         };
-        const uploadedFile = new UploadedFileModel(fileData);
 
-        uploadedFile
+        const uploadFile = new UploadFileModel(fileData);
+
+        uploadFile
             .save()
             .then((fileObg: any) => {
                 res.json({

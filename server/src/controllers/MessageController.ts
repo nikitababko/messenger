@@ -30,7 +30,7 @@ class MessageController {
         );
 
         MessageModel.find({ dialog: dialogId })
-            .populate(["dialog", "user"])
+            .populate(["dialog", "user", "attachments"])
             .exec(function (err, messages) {
                 if (err) {
                     return res.status(404).json({
@@ -48,6 +48,7 @@ class MessageController {
         const postData = {
             text: req.body.text,
             dialog: req.body.dialog_id,
+            attachments: req.body.attachments,
             user: userId,
         };
 
@@ -56,32 +57,35 @@ class MessageController {
         message
             .save()
             .then((obj: any) => {
-                obj.populate(["dialog", "user"], (err: any, message: any) => {
-                    if (err) {
-                        return res.status(500).json({
-                            status: "error",
-                            message: err,
-                        });
-                    }
-
-                    DialogModel.findOneAndUpdate(
-                        { _id: postData.dialog },
-                        { lastMessage: message._id },
-                        { upsert: true },
-                        function (err) {
-                            if (err) {
-                                return res.status(500).json({
-                                    status: "error",
-                                    message: err,
-                                });
-                            }
+                obj.populate(
+                    ["dialog", "user", "attachments"],
+                    (err: any, message: any) => {
+                        if (err) {
+                            return res.status(500).json({
+                                status: "error",
+                                message: err,
+                            });
                         }
-                    );
 
-                    res.json(message);
+                        DialogModel.findOneAndUpdate(
+                            { _id: postData.dialog },
+                            { lastMessage: message._id },
+                            { upsert: true },
+                            function (err) {
+                                if (err) {
+                                    return res.status(500).json({
+                                        status: "error",
+                                        message: err,
+                                    });
+                                }
+                            }
+                        );
 
-                    this.io.emit("SERVER:NEW_MESSAGE", message);
-                });
+                        res.json(message);
+
+                        this.io.emit("SERVER:NEW_MESSAGE", message);
+                    }
+                );
             })
             .catch((reason) => {
                 res.json(reason);

@@ -54,7 +54,6 @@ const SidebarContainer = ({ user }) => {
     };
 
     const onSelectUser = (userId) => {
-        console.log(userId);
         setSelectedUserId(userId);
     };
 
