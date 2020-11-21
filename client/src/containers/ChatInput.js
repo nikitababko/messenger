@@ -30,8 +30,13 @@ const ChatInput = ({ fetchSendMessage, currentDialogId }) => {
     };
 
     const sendMessage = () => {
-        fetchSendMessage(value, currentDialogId);
+        fetchSendMessage(
+            value,
+            currentDialogId,
+            attachments.map((file) => file.uid)
+        );
         setValue("");
+        setAttachments([]);
     };
 
     const handleSendMessage = (e) => {
@@ -40,24 +45,11 @@ const ChatInput = ({ fetchSendMessage, currentDialogId }) => {
         }
     };
 
-    const onUpload = (files, file, uid) => {
-        filesApi.upload(file).then(({ data }) => {
-            files = files.map((item) => {
-                if (item.uid === uid) {
-                    item = {
-                        uid: data.file._id,
-                        name: data.file.filename,
-                        url: data.file.url,
-                        status: "done",
-                    };
-                }
-                return item;
-            });
-        });
-        setAttachments(files);
-    };
+    // const onUpload = (uploaded, file) => {
+    //     return filesApi.upload(file);
+    // };
 
-    const onSelectFiles = (files) => {
+    const onSelectFiles = async (files) => {
         let uploaded = [];
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
@@ -66,13 +58,24 @@ const ChatInput = ({ fetchSendMessage, currentDialogId }) => {
                 ...uploaded,
                 {
                     uid,
-                    file,
                     name: file.name,
                     status: "uploading",
                 },
             ];
-            uploaded.forEach((item) => {
-                onUpload(uploaded, item.file, item.uid);
+            setAttachments(uploaded);
+            await filesApi.upload(file).then(({ data }) => {
+                uploaded = uploaded.map((item) => {
+                    if (item.uid === uid) {
+                        return {
+                            status: "done",
+                            uid: data.file._id,
+                            name: data.file.filename,
+                            url: data.file.url,
+                        };
+                    }
+                    return item;
+                });
+                setAttachments(uploaded);
             });
         }
     };
