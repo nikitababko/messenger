@@ -21,6 +21,9 @@ const ChatInput = (props) => {
         sendMessage,
         attachments,
         onSelectFiles,
+        isRecording,
+        onRecord,
+        onStopRecording,
     } = props;
 
     return (
@@ -43,14 +46,29 @@ const ChatInput = (props) => {
                             icon="smile"
                         />
                     </div>
-                    <TextArea
-                        onChange={(e) => setValue(e.target.value)}
-                        onKeyUp={handleSendMessage}
-                        size="large"
-                        placeholder="Введите текст сообщения…"
-                        value={value}
-                        autosize={{ minRows: 1, maxRows: 6 }}
-                    />
+                    {isRecording ? (
+                        <div className="chat-input__record-status">
+                            <i className="chat-input__record-status-bubble"></i>
+                            Recording...
+                            <Button
+                                onClick={onStopRecording}
+                                type="link"
+                                shape="circle"
+                                icon="close-circle"
+                                className="stop-recording"
+                            />
+                        </div>
+                    ) : (
+                        <TextArea
+                            onChange={(e) => setValue(e.target.value)}
+                            onKeyUp={handleSendMessage}
+                            size="large"
+                            placeholder="Введите текст сообщения…"
+                            value={value}
+                            autosize={{ minRows: 1, maxRows: 6 }}
+                        />
+                    )}
+
                     <div className="chat-input__actions">
                         <UploadField
                             onFiles={onSelectFiles}
@@ -63,9 +81,9 @@ const ChatInput = (props) => {
                                 multiple: "multiple",
                             }}
                         >
-                            <Button type="link" shape="circle" icon="upload" />
+                            <Button type="link" shape="circle" icon="paper-clip" />
                         </UploadField>
-                        {value ? (
+                        {isRecording || value ? (
                             <Button
                                 onClick={sendMessage}
                                 type="link"
@@ -73,7 +91,14 @@ const ChatInput = (props) => {
                                 icon="check-circle"
                             />
                         ) : (
-                            <Button type="link" shape="circle" icon="audio" />
+                            <div className="chat-input__record-btn">
+                                <Button
+                                    onClick={onRecord}
+                                    type="link"
+                                    shape="circle"
+                                    icon="audio"
+                                />
+                            </div>
                         )}
                     </div>
                 </div>
