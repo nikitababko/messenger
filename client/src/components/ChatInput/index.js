@@ -17,14 +17,15 @@ const ChatInput = (props) => {
         addEmoji,
         setValue,
         handleSendMessage,
-        toggleEmojiPicker,
         sendMessage,
+        toggleEmojiPicker,
         attachments,
         onSelectFiles,
         isRecording,
         onRecord,
-        onStopRecording,
         onHideRecording,
+        isLoading,
+        removeAttachment,
     } = props;
 
     return (
@@ -84,7 +85,14 @@ const ChatInput = (props) => {
                         >
                             <Button type="link" shape="circle" icon="paper-clip" />
                         </UploadField>
-                        {isRecording || value || attachments.length ? (
+                        {isLoading ? (
+                            <Button
+                                onClick={sendMessage}
+                                type="link"
+                                shape="circle"
+                                icon="loading"
+                            />
+                        ) : isRecording || value || attachments.length ? (
                             <Button
                                 onClick={sendMessage}
                                 type="link"
@@ -103,9 +111,14 @@ const ChatInput = (props) => {
                         )}
                     </div>
                 </div>
-                <div className="chat-input__attachments">
-                    <UploadFiles attachments={attachments} />
-                </div>
+                {attachments.length > 0 && (
+                    <div className="chat-input__attachments">
+                        <UploadFiles
+                            removeAttachment={removeAttachment}
+                            attachments={attachments}
+                        />
+                    </div>
+                )}
             </div>
         </Fragment>
     );

@@ -6,7 +6,7 @@ import { Emoji } from "emoji-mart";
 
 import reactStringReplace from "react-string-replace";
 
-import { convertCurrentTime } from "utils/helpers";
+import { convertCurrentTime, isAudio } from "utils/helpers";
 
 import waveSvg from "assets/img/wave.svg";
 import playSvg from "assets/img/play.svg";
@@ -106,8 +106,8 @@ const Message = ({
         if (item.ext !== "webm") {
             return (
                 <div
-                    onClick={() => setPreviewImage(item.url)}
                     key={item._id}
+                    onClick={() => setPreviewImage(item.url)}
                     className="message__attachments-item"
                 >
                     <div className="message__attachments-item-overlay">
@@ -123,13 +123,8 @@ const Message = ({
                 </div>
             );
         } else {
-            return <MessageAudio audioSrc={item.url} />;
+            return <MessageAudio key={item._id} audioSrc={item.url} />;
         }
-    };
-
-    const isAudio = () => {
-        const file = attachments[0];
-        return attachments.length && file.ext === "webm";
     };
 
     return (
@@ -137,9 +132,12 @@ const Message = ({
             className={classNames("message", {
                 "message--isme": isMe,
                 "message--is-typing": isTyping,
-                "message--is-audio": isAudio(),
+                "message--is-audio": isAudio(attachments),
                 "message--image":
-                    !isAudio() && attachments && attachments.length === 1 && !text,
+                    !isAudio(attachments) &&
+                    attachments &&
+                    attachments.length === 1 &&
+                    !text,
             })}
         >
             <div className="message__content">
@@ -162,7 +160,7 @@ const Message = ({
                     <Avatar user={user} />
                 </div>
                 <div className="message__info">
-                    {text && (
+                    {(text || isTyping) && (
                         <div className="message__bubble">
                             {text && (
                                 <p className="message__text">

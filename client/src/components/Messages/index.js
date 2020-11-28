@@ -17,12 +17,14 @@ const Messages = ({
     user,
     previewImage,
     setPreviewImage,
+    blockHeight,
+    isTyping,
 }) => {
     return (
         <div
             className="chat__dialog-messages"
             style={{
-                height: `calc(100% - 245px)`,
+                height: `calc(100% - ${blockHeight}px)`,
             }}
         >
             <div
@@ -31,13 +33,12 @@ const Messages = ({
                     "messages--loading": isLoading,
                 })}
             >
-                {isLoading ? (
+                {isLoading && !user ? (
                     <Spin size="large" tip="Загрузка сообщений..." />
                 ) : items && !isLoading ? (
                     items.length > 0 ? (
                         items.map((item) => (
                             <Message
-                                key={item._id}
                                 {...item}
                                 isMe={user._id === item.user._id}
                                 onRemoveMessage={onRemoveMessage.bind(
@@ -45,6 +46,7 @@ const Messages = ({
                                     item._id
                                 )}
                                 setPreviewImage={setPreviewImage}
+                                key={item._id}
                             />
                         ))
                     ) : (
@@ -52,6 +54,12 @@ const Messages = ({
                     )
                 ) : (
                     <Empty description="Откройте диалог" />
+                )}
+                {isTyping && (
+                    <Message
+                        isTyping={true}
+                        user={{ fullname: "qwe", _id: "qwe12e12eqq" }}
+                    />
                 )}
                 <Modal
                     visible={!!previewImage}

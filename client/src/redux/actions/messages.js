@@ -17,7 +17,7 @@ const Actions = {
         }
     },
     fetchSendMessage: ({ text, dialogId, attachments }) => (dispatch) => {
-        messagesApi.send(text, dialogId, attachments);
+        return messagesApi.send(text, dialogId, attachments);
     },
     setIsLoading: (bool) => ({
         type: "MESSAGES:SET_IS_LOADING",
