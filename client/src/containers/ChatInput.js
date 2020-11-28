@@ -48,16 +48,14 @@ const ChatInput = ({ fetchSendMessage, currentDialogId }) => {
         };
 
         recorder.ondataavailable = (e) => {
-            // const file = new File([e.data], "audio.webm");
+            const file = new File([e.data], "audio.ogg", { type: "audio/ogg" });
             // setLoading(true);
-            // filesApi.upload(file).then(({ data }) => {
-            //     sendAudio(data.file._id).then(() => {
-            //         setLoading(false);
-            //     });
-            // });
-
-            const audioURL = window.URL.createObjectURL(e.data);
-            new Audio(audioURL).play();
+            filesApi.upload(file).then(({ data }) => {
+                // sendAudio(data.file._id).then(() => {
+                //     setLoading(false);
+                // });
+                sendAudio(data.file._id);
+            });
         };
     };
 
@@ -75,12 +73,24 @@ const ChatInput = ({ fetchSendMessage, currentDialogId }) => {
         setValue((value + " " + colons).trim());
     };
 
+    const sendAudio = (audioId) => {
+        onStopRecording();
+        fetchSendMessage({
+            text: value,
+            dialogId: currentDialogId,
+            attachments: [audioId],
+        });
+    };
+
     const sendMessage = () => {
-        fetchSendMessage(
-            value,
-            currentDialogId,
-            attachments.map((file) => file.uid)
-        );
+        if (isRecording) {
+            //
+        }
+        fetchSendMessage({
+            text: value,
+            dialogId: currentDialogId,
+            attachments: attachments.map((file) => file.uid),
+        });
         setValue("");
         setAttachments([]);
     };
@@ -93,6 +103,10 @@ const ChatInput = ({ fetchSendMessage, currentDialogId }) => {
 
     const onStopRecording = () => {
         mediaRecorder.stop();
+    };
+
+    const onHideRecording = () => {
+        setIsRecording(false);
     };
 
     const onSelectFiles = async (files) => {
@@ -148,6 +162,7 @@ const ChatInput = ({ fetchSendMessage, currentDialogId }) => {
             isRecording={isRecording}
             onRecord={onRecord}
             onStopRecording={onStopRecording}
+            onHideRecording={onHideRecording}
         />
     );
 };

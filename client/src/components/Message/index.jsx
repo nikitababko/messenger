@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import { Popover, Button } from "antd";
+import { Popover, Button, Icon } from "antd";
 import { Emoji } from "emoji-mart";
 
 import reactStringReplace from "react-string-replace";
@@ -95,20 +95,51 @@ const Message = ({
     user,
     text,
     date,
-    audio,
     isMe,
     readed,
     attachments,
     isTyping,
     onRemoveMessage,
+    setPreviewImage,
 }) => {
+    const renderAttachment = (item) => {
+        if (item.ext !== "webm") {
+            return (
+                <div
+                    onClick={() => setPreviewImage(item.url)}
+                    key={item._id}
+                    className="message__attachments-item"
+                >
+                    <div className="message__attachments-item-overlay">
+                        <Icon
+                            type="eye"
+                            style={{
+                                color: "#fff",
+                                fontSize: "18px",
+                            }}
+                        />
+                    </div>
+                    <img src={item.url} alt={item.filename} />
+                </div>
+            );
+        } else {
+            return <MessageAudio audioSrc={item.url} />;
+        }
+    };
+
+    const isAudio = () => {
+        const file = attachments[0];
+        return attachments.length && file.ext === "webm";
+    };
+
     return (
         <div
             className={classNames("message", {
                 "message--isme": isMe,
                 "message--is-typing": isTyping,
-                "message--is-audio": audio,
-                "message--image": attachments && attachments.length === 1 && !text,
+                "message--is-audio": isAudio(),
+                "message--image":
+                    !isAudio() && attachments && attachments.length === 1 && !text,
             })}
         >
             <div className="message__content">
@@ -131,7 +162,7 @@ const Message = ({
                     <Avatar user={user} />
                 </div>
                 <div className="message__info">
-                    {(audio || text || isTyping) && (
+                    {text && (
                         <div className="message__bubble">
                             {text && (
                                 <p className="message__text">
@@ -156,20 +187,15 @@ const Message = ({
                                     <span />
                                 </div>
                             )}
-                            {audio && <MessageAudio audioSrc={audio} />}
+                            {false && <MessageAudio audioSrc={null} />}
                         </div>
                     )}
 
                     {attachments && (
                         <div className="message__attachments">
-                            {attachments.map((item, index) => (
-                                <div
-                                    key={index}
-                                    className="message__attachments-item"
-                                >
-                                    <img src={item.url} alt={item.filename} />
-                                </div>
-                            ))}
+                            {attachments.map((item, index) =>
+                                renderAttachment(item)
+                            )}
                         </div>
                     )}
 

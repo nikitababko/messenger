@@ -24,6 +24,7 @@ const ChatInput = (props) => {
         isRecording,
         onRecord,
         onStopRecording,
+        onHideRecording,
     } = props;
 
     return (
@@ -51,7 +52,7 @@ const ChatInput = (props) => {
                             <i className="chat-input__record-status-bubble"></i>
                             Recording...
                             <Button
-                                onClick={onStopRecording}
+                                onClick={onHideRecording}
                                 type="link"
                                 shape="circle"
                                 icon="close-circle"
@@ -83,7 +84,7 @@ const ChatInput = (props) => {
                         >
                             <Button type="link" shape="circle" icon="paper-clip" />
                         </UploadField>
-                        {isRecording || value ? (
+                        {isRecording || value || attachments.length ? (
                             <Button
                                 onClick={sendMessage}
                                 type="link"
