@@ -1,19 +1,11 @@
 import React from "react";
 import classNames from "classnames";
-import format from "date-fns/format";
-import isToday from "date-fns/is_today";
+
 import { Link } from "react-router-dom";
 
-import { IconReaded, Avatar } from "../";
-import { isAudio } from "utils/helpers";
+import { getMessageTime } from "utils/helpers";
 
-const getMessageTime = (createdAt) => {
-    if (isToday(createdAt)) {
-        return format(createdAt, "HH:mm");
-    } else {
-        return format(createdAt, "DD.MM.YYYY");
-    }
-};
+import { IconReaded, Avatar } from "../";
 
 const renderLastMessage = (message, userId) => {
     let text = "";
@@ -22,7 +14,8 @@ const renderLastMessage = (message, userId) => {
     } else {
         text = message.text;
     }
-    return ` ${message.user._id === userId ? "Вы: " : ""}${text}`;
+
+    return `${message.user._id === userId ? "Вы: " : ""}${text}`;
 };
 
 const DialogItem = ({
@@ -53,9 +46,7 @@ const DialogItem = ({
                 </div>
                 <div className="dialogs__item-info-bottom">
                     <p>{renderLastMessage(lastMessage, userId)}</p>
-                    {isMe && (
-                        <IconReaded isMe={isMe} isReaded={lastMessage.readed} />
-                    )}
+                    {isMe && <IconReaded isMe={isMe} isReaded={lastMessage.readed} />}
                     {lastMessage.undread > 0 && (
                         <div className="dialogs__item-info-bottom-count">
                             {lastMessage.undread > 9 ? "+9" : lastMessage.undread}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon, Button, Modal, Select, Input, Form } from "antd";
+import { Icon, Button, Modal, Select, Input, Form, Popover } from "antd";
 import { Dialogs } from "containers";
 
 import "./Sidebar.scss";
@@ -21,15 +21,26 @@ const Sidebar = ({
     onChangeInput,
     onSelectUser,
     onChangeTextArea,
+    logOut,
     onModalOk,
 }) => {
-    const options = users.map((user) => (
-        <Option key={user._id}>{user.fullname}</Option>
-    ));
+    const options = users.map((user) => <Option key={user._id}>{user.fullname}</Option>);
 
     return (
         <div className="chat__sidebar">
             <div className="chat__sidebar-header">
+                <Popover
+                    content={
+                        <div>
+                            <Button onClick={logOut}>Выйти</Button>
+                        </div>
+                    }
+                    trigger="click"
+                >
+                    <div>
+                        <Button type="link" shape="circle" icon="logout" />
+                    </div>
+                </Popover>
                 <div>
                     <Icon type="team" />
                     <span>Список диалогов</span>
@@ -40,9 +51,11 @@ const Sidebar = ({
             <div className="chat__sidebar-dialogs">
                 <Dialogs userId={user && user._id} />
             </div>
+
             <Modal
                 title="Создать диалог"
                 visible={visible}
+                onCancel={onClose}
                 footer={[
                     <Button key="back" onClick={onClose}>
                         Закрыть
@@ -70,18 +83,16 @@ const Sidebar = ({
                             defaultActiveFirstOption={false}
                             showArrow={false}
                             filterOption={false}
-                            placeholder="Введите имя или почту пользователя"
+                            placeholder="Введите имя пользователя или почту"
                             showSearch
                         >
                             {options}
                         </Select>
                     </Form.Item>
-
                     {selectedUserId && (
                         <Form.Item label="Введите текст сообщения">
                             <TextArea
-                                placeholder=""
-                                autoSize={{ minRows: 3, maxRows: 10 }}
+                                autosize={{ minRows: 3, maxRows: 10 }}
                                 onChange={onChangeTextArea}
                                 value={messageText}
                             />

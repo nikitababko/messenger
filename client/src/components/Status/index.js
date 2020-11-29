@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 
+import { Button, Popover } from "antd";
+
 import "./Status.scss";
 
 const Status = ({ online, fullname }) => (
@@ -14,6 +16,20 @@ const Status = ({ online, fullname }) => (
                 </span>
             </div>
         </div>
+
+        <Popover
+            className="chat__dialog-header-action"
+            content={
+                <div>
+                    <Button>Удалить диалог</Button>
+                </div>
+            }
+            trigger="click"
+        >
+            <div>
+                <Button type="link" shape="circle" icon="delete" />
+            </div>
+        </Popover>
     </div>
 );
 

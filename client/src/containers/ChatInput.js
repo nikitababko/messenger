@@ -61,9 +61,6 @@ const ChatInput = (props) => {
             const file = new File([e.data], "audio.webm");
             setLoading(true);
             filesApi.upload(file).then(({ data }) => {
-                // sendAudio(data.file._id).then(() => {
-
-                // });
                 sendAudio(data.file._id).then(() => {
                     setLoading(false);
                 });
@@ -96,7 +93,7 @@ const ChatInput = (props) => {
     const sendMessage = () => {
         if (isRecording) {
             mediaRecorder.stop();
-        } else if (value) {
+        } else if (value || attachments.length) {
             fetchSendMessage({
                 text: value,
                 dialogId: currentDialogId,
@@ -109,8 +106,12 @@ const ChatInput = (props) => {
 
     const handleSendMessage = (e) => {
         socket.emit("DIALOGS:TYPING", { dialogId: currentDialogId, user });
-        if (e.keyCode === 13) {
+        if (e.keyCode === 13 && !e.shiftKey) {
+            e.preventDefault();
             sendMessage();
+        }
+        if (e.keyCode === 13 && e.shiftKey) {
+            setValue(value + "\n");
         }
     };
 
@@ -132,6 +133,7 @@ const ChatInput = (props) => {
                 },
             ];
             setAttachments(uploaded);
+            // eslint-disable-next-line no-loop-func
             await filesApi.upload(file).then(({ data }) => {
                 uploaded = uploaded.map((item) => {
                     if (item.uid === uid) {
@@ -144,9 +146,9 @@ const ChatInput = (props) => {
                     }
                     return item;
                 });
-                setAttachments(uploaded);
             });
         }
+        setAttachments(uploaded);
     };
 
     useEffect(() => {
@@ -183,8 +185,5 @@ export default connect(
         attachments: attachments.items,
         user: user.data,
     }),
-    {
-        ...messagesActions,
-        ...attachmentsActions,
-    }
+    { ...messagesActions, ...attachmentsActions }
 )(ChatInput);

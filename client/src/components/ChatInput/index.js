@@ -24,8 +24,8 @@ const ChatInput = (props) => {
         isRecording,
         onRecord,
         onHideRecording,
-        isLoading,
         removeAttachment,
+        isLoading,
     } = props;
 
     return (
@@ -51,7 +51,7 @@ const ChatInput = (props) => {
                     {isRecording ? (
                         <div className="chat-input__record-status">
                             <i className="chat-input__record-status-bubble"></i>
-                            Recording...
+                            Идет запись...
                             <Button
                                 onClick={onHideRecording}
                                 type="link"
@@ -68,6 +68,7 @@ const ChatInput = (props) => {
                             placeholder="Введите текст сообщения…"
                             value={value}
                             autosize={{ minRows: 1, maxRows: 6 }}
+                            onPressEnter={(e) => e.preventDefault()}
                         />
                     )}
 
@@ -78,20 +79,14 @@ const ChatInput = (props) => {
                                 className: "chat-input__actions-upload-btn",
                             }}
                             uploadProps={{
-                                accept:
-                                    ".rar,.tar,.doc,.docx,.jpg,.jpeg,.png,.gif,.bmp",
+                                accept: ".jpg,.jpeg,.png,.gif,.bmp",
                                 multiple: "multiple",
                             }}
                         >
                             <Button type="link" shape="circle" icon="paper-clip" />
                         </UploadField>
                         {isLoading ? (
-                            <Button
-                                onClick={sendMessage}
-                                type="link"
-                                shape="circle"
-                                icon="loading"
-                            />
+                            <Button type="link" shape="circle" icon="loading" />
                         ) : isRecording || value || attachments.length ? (
                             <Button
                                 onClick={sendMessage}
