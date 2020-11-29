@@ -7,7 +7,6 @@ import classNames from "classnames";
 import { Message } from "../";
 
 import "./Messages.scss";
-import { previewImage } from "antd/lib/upload/utils";
 
 const Messages = ({
     onRemoveMessage,
@@ -19,19 +18,16 @@ const Messages = ({
     setPreviewImage,
     blockHeight,
     isTyping,
+    partner,
 }) => {
     return (
         <div
             className="chat__dialog-messages"
-            style={{
-                height: `calc(100% - ${blockHeight}px)`,
-            }}
+            style={{ height: `calc(100% - ${blockHeight}px)` }}
         >
             <div
                 ref={blockRef}
-                className={classNames("messages", {
-                    "messages--loading": isLoading,
-                })}
+                className={classNames("messages", { "messages--loading": isLoading })}
             >
                 {isLoading && !user ? (
                     <Spin size="large" tip="Загрузка сообщений..." />
@@ -41,12 +37,10 @@ const Messages = ({
                             <Message
                                 {...item}
                                 isMe={user._id === item.user._id}
-                                onRemoveMessage={onRemoveMessage.bind(
-                                    this,
-                                    item._id
-                                )}
+                                onRemoveMessage={onRemoveMessage.bind(this, item._id)}
                                 setPreviewImage={setPreviewImage}
                                 key={item._id}
+                                mesCreatedAt={item.createdAt}
                             />
                         ))
                     ) : (
@@ -55,22 +49,13 @@ const Messages = ({
                 ) : (
                     <Empty description="Откройте диалог" />
                 )}
-                {isTyping && (
-                    <Message
-                        isTyping={true}
-                        user={{ fullname: "qwe", _id: "qwe12e12eqq" }}
-                    />
-                )}
+                {isTyping && <Message isTyping={true} user={partner} />}
                 <Modal
                     visible={!!previewImage}
                     onCancel={() => setPreviewImage(null)}
                     footer={null}
                 >
-                    <img
-                        src={previewImage}
-                        style={{ width: "100%" }}
-                        alt="Preview"
-                    />
+                    <img src={previewImage} style={{ width: "100%" }} alt="Preview" />
                 </Modal>
             </div>
         </div>

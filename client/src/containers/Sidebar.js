@@ -7,7 +7,7 @@ import { Sidebar } from "components";
 const SidebarContainer = ({ user }) => {
     const [visible, setVisible] = useState(false);
     const [inputValue, setInputValue] = useState("");
-    const [messageText, setMessageText] = useState("");
+    const [messageText, setMessagaText] = useState("");
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(false);
@@ -33,6 +33,11 @@ const SidebarContainer = ({ user }) => {
             });
     };
 
+    const logOut = () => {
+        delete window.localStorage.token;
+        window.location.reload();
+    };
+
     const onAddDialog = () => {
         dialogsApi
             .create({
@@ -50,7 +55,7 @@ const SidebarContainer = ({ user }) => {
     };
 
     const onChangeTextArea = (e) => {
-        setMessageText(e.target.value);
+        setMessagaText(e.target.value);
     };
 
     const onSelectUser = (userId) => {
@@ -68,6 +73,7 @@ const SidebarContainer = ({ user }) => {
             onSearch={onSearch}
             onChangeInput={handleChangeInput}
             onSelectUser={onSelectUser}
+            logOut={logOut}
             onModalOk={onAddDialog}
             onChangeTextArea={onChangeTextArea}
             messageText={messageText}
@@ -77,6 +83,4 @@ const SidebarContainer = ({ user }) => {
     );
 };
 
-export default connect(({ user }) => ({
-    user: user.data,
-}))(SidebarContainer);
+export default connect(({ user }) => ({ user: user.data }))(SidebarContainer);

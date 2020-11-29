@@ -3,10 +3,9 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import { Popover, Button, Icon } from "antd";
 import { Emoji } from "emoji-mart";
-
 import reactStringReplace from "react-string-replace";
 
-import { convertCurrentTime, isAudio } from "utils/helpers";
+import { convertCurrentTime, isAudio, getMessageTime } from "utils/helpers";
 
 import waveSvg from "assets/img/wave.svg";
 import playSvg from "assets/img/play.svg";
@@ -31,7 +30,7 @@ const MessageAudio = ({ audioSrc }) => {
     };
 
     useEffect(() => {
-        audioElem.current.volume = "0.01";
+        audioElem.current.volume = "1";
         audioElem.current.addEventListener(
             "playing",
             () => {
@@ -55,6 +54,7 @@ const MessageAudio = ({ audioSrc }) => {
             },
             false
         );
+
         audioElem.current.addEventListener("timeupdate", () => {
             const duration = (audioElem.current && audioElem.current.duration) || 0;
             setCurrentTime(audioElem.current.currentTime);
@@ -64,11 +64,8 @@ const MessageAudio = ({ audioSrc }) => {
 
     return (
         <div className="message__audio">
-            <audio ref={audioElem} src={audioSrc} preload="auto" />
-            <div
-                className="message__audio-progress"
-                style={{ width: progress + "%" }}
-            />
+            <audio id="audio" ref={audioElem} src={audioSrc} preload="auto" />
+            <div className="message__audio-progress" style={{ width: progress + "%" }} />
             <div className="message__audio-info">
                 <div className="message__audio-btn">
                     <button onClick={togglePlay}>
@@ -101,6 +98,7 @@ const Message = ({
     isTyping,
     onRemoveMessage,
     setPreviewImage,
+    mesCreatedAt,
 }) => {
     const renderAttachment = (item) => {
         if (item.ext !== "webm") {
@@ -111,14 +109,9 @@ const Message = ({
                     className="message__attachments-item"
                 >
                     <div className="message__attachments-item-overlay">
-                        <Icon
-                            type="eye"
-                            style={{
-                                color: "#fff",
-                                fontSize: "18px",
-                            }}
-                        />
+                        <Icon type="eye" style={{ color: "white", fontSize: 18 }} />
                     </div>
+
                     <img src={item.url} alt={item.filename} />
                 </div>
             );
@@ -145,9 +138,7 @@ const Message = ({
                 <Popover
                     content={
                         <div>
-                            <Button onClick={onRemoveMessage}>
-                                Удалить сообщение
-                            </Button>
+                            <Button onClick={onRemoveMessage}>Удалить сообщение</Button>
                         </div>
                     }
                     trigger="click"
@@ -164,18 +155,14 @@ const Message = ({
                         <div className="message__bubble">
                             {text && (
                                 <p className="message__text">
-                                    {reactStringReplace(
-                                        text,
-                                        /:(.+?):/g,
-                                        (match, i) => (
-                                            <Emoji
-                                                key={i}
-                                                emoji={match}
-                                                set="apple"
-                                                size={16}
-                                            />
-                                        )
-                                    )}
+                                    {reactStringReplace(text, /:(.+?):/g, (match, i) => (
+                                        <Emoji
+                                            key={i}
+                                            emoji={match}
+                                            set="apple"
+                                            size={16}
+                                        />
+                                    ))}
                                 </p>
                             )}
                             {isTyping && (
@@ -186,14 +173,15 @@ const Message = ({
                                 </div>
                             )}
                             {false && <MessageAudio audioSrc={null} />}
+                            <span className="message__created-at">
+                                {getMessageTime(mesCreatedAt)}
+                            </span>
                         </div>
                     )}
 
                     {attachments && (
                         <div className="message__attachments">
-                            {attachments.map((item, index) =>
-                                renderAttachment(item)
-                            )}
+                            {attachments.map((item) => renderAttachment(item))}
                         </div>
                     )}
 

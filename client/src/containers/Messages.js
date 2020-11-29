@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { Empty } from "antd";
+import find from "lodash/find";
 
 import { messagesActions } from "redux/actions";
 import socket from "core/socket";
@@ -8,7 +9,7 @@ import socket from "core/socket";
 import { Messages as BaseMessages } from "components";
 
 const Dialogs = ({
-    currentDialogId,
+    currentDialog,
     fetchMessages,
     addMessage,
     items,
@@ -17,7 +18,7 @@ const Dialogs = ({
     removeMessageById,
     attachments,
 }) => {
-    if (!currentDialogId) {
+    if (!currentDialog) {
         return <Empty description="Откройте диалог" />;
     }
 
@@ -53,18 +54,18 @@ const Dialogs = ({
     }, [attachments]);
 
     useEffect(() => {
-        if (currentDialogId) {
-            fetchMessages(currentDialogId);
+        if (currentDialog) {
+            fetchMessages(currentDialog._id);
         }
 
         socket.on("SERVER:NEW_MESSAGE", onNewMessage);
 
         return () => socket.removeListener("SERVER:NEW_MESSAGE", onNewMessage);
-    }, [currentDialogId]);
+    }, [currentDialog]);
 
     useEffect(() => {
         messagesRef.current.scrollTo(0, 999999);
-    }, [items]);
+    }, [items, isTyping]);
 
     return (
         <BaseMessages
@@ -77,13 +78,18 @@ const Dialogs = ({
             previewImage={previewImage}
             blockHeight={blockHeight}
             isTyping={isTyping}
+            partner={
+                user._id !== currentDialog.partner._id
+                    ? currentDialog.author
+                    : currentDialog.partner
+            }
         />
     );
 };
 
 export default connect(
     ({ dialogs, messages, user, attachments }) => ({
-        currentDialogId: dialogs.currentDialogId,
+        currentDialog: find(dialogs.items, { _id: dialogs.currentDialogId }),
         items: messages.items,
         isLoading: messages.isLoading,
         attachments: attachments.items,
