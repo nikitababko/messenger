@@ -24,7 +24,7 @@ P.S.: You can also confirm your account without Mailtrap. Just find your user in
 
 Need regisration on the site [cloudinary.com](https://cloudinary.com/)
 
-Into file `.env` you need to specify parameters for Cloudinary API. Follow the link [Dashboard](https://cloudinary.com/console) and copy your API-parameters.
+Into file `.env` you need to specify parameters for Cloudinary API. Follow the link [Dashboard](https://cloudinary.com/console) and copy your API-parameters. Below is a screenshot where you can take your API-parameters.
 
 ![](https://image.prntscr.com/image/XOvt2ponRbKQyWUiSoI5vw.png)
 
