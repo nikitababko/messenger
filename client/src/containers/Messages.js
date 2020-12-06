@@ -19,7 +19,7 @@ const Dialogs = ({
     attachments,
 }) => {
     if (!currentDialog) {
-        return <Empty description="Откройте диалог" />;
+        return <Empty description="Open dialog" />;
     }
 
     const [previewImage, setPreviewImage] = useState(null);

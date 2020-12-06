@@ -51,7 +51,7 @@ const ChatInput = (props) => {
                     {isRecording ? (
                         <div className="chat-input__record-status">
                             <i className="chat-input__record-status-bubble"></i>
-                            Идет запись...
+                            Recording...
                             <Button
                                 onClick={onHideRecording}
                                 type="link"
@@ -65,7 +65,7 @@ const ChatInput = (props) => {
                             onChange={(e) => setValue(e.target.value)}
                             onKeyUp={handleSendMessage}
                             size="large"
-                            placeholder="Введите текст сообщения…"
+                            placeholder="Enter your message…"
                             value={value}
                             autosize={{ minRows: 1, maxRows: 6 }}
                             onPressEnter={(e) => e.preventDefault()}

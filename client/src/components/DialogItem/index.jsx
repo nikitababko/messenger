@@ -10,7 +10,7 @@ import { IconReaded, Avatar } from "../";
 const renderLastMessage = (message, userId) => {
     let text = "";
     if (!message.text && message.attachments.length) {
-        text = "прикрепленный файл";
+        text = "attachment file";
     } else {
         text = message.text;
     }

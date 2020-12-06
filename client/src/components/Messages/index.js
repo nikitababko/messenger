@@ -44,10 +44,10 @@ const Messages = ({
                             />
                         ))
                     ) : (
-                        <Empty description="Диалог пуст" />
+                        <Empty description="Dialog is empty" />
                     )
                 ) : (
-                    <Empty description="Откройте диалог" />
+                    <Empty description="Open dailog" />
                 )}
                 {isTyping && <Message isTyping={true} user={partner} />}
                 <Modal

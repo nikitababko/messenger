@@ -138,7 +138,7 @@ const Message = ({
                 <Popover
                     content={
                         <div>
-                            <Button onClick={onRemoveMessage}>Удалить сообщение</Button>
+                            <Button onClick={onRemoveMessage}>Delete message</Button>
                         </div>
                     }
                     trigger="click"
@@ -173,9 +173,12 @@ const Message = ({
                                 </div>
                             )}
                             {false && <MessageAudio audioSrc={null} />}
-                            <span className="message__created-at">
-                                {getMessageTime(mesCreatedAt)}
-                            </span>
+
+                            {!isTyping ? (
+                                <span className="message__created-at">
+                                    {getMessageTime(mesCreatedAt)}
+                                </span>
+                            ) : null}
                         </div>
                     )}
 

@@ -12,7 +12,7 @@ const Status = ({ online, fullname }) => (
             <b className="chat__dialog-header-username">{fullname}</b>
             <div className="chat__dialog-header-status">
                 <span className={classNames("status", { "status--online": online })}>
-                    {online ? "онлайн" : "офлайн"}
+                    {online ? "online" : "offline"}
                 </span>
             </div>
         </div>
@@ -21,7 +21,7 @@ const Status = ({ online, fullname }) => (
             className="chat__dialog-header-action"
             content={
                 <div>
-                    <Button>Удалить диалог</Button>
+                    <Button>Delete dialog</Button>
                 </div>
             }
             trigger="click"
