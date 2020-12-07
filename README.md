@@ -20,7 +20,7 @@ I use `nodemailer`. But can use to any SMTP-server.
 
 P.S.: You can also confirm your account without Mailtrap. Just find your user in the DB and specify `confirmed: true` or follow the link `http://localhost:{FRONTEND_PORT}/signup/verify?hash={HASH}`.
 
-## Upload files on Cloudinary на Cloudinary
+## Upload files on Cloudinary
 
 Need regisration on the site [cloudinary.com](https://cloudinary.com/)
 
