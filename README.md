@@ -1,6 +1,6 @@
 ## Install
 
-1. `npm install` или `yarn`
+1. `npm install` или `yarn install`
 2. Create `.env` file.
 3. Install MongoDB and start it.
 4. Run command `npm start` or `yarn start`.
