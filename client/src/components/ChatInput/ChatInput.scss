@@ -10,6 +10,10 @@
         margin-right: 15px;
     }
 
+    textarea {
+        resize: none;
+    }
+
     .ant-btn-circle {
         i.anticon {
             cursor: pointer;

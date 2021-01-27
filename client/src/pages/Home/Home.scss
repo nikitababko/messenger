@@ -1,3 +1,140 @@
 .home {
-  height: 100%;
+    height: 100%;
+}
+
+// Black theme
+.home--dark {
+    background-color: #3f4361;
+    transition: background-color 0.4s ease-in-out;
+
+    & > * {
+        background-color: #292c43 !important;
+        transition: background-color 0.4s ease-in-out;
+    }
+
+    .chat {
+        &__sidebar {
+            border-right-color: #4e536d;
+
+            &-header {
+                border-bottom-color: #4e536d;
+
+                i,
+                span {
+                    color: #bfbfbf;
+                }
+
+                .ant-btn {
+                    i {
+                        path {
+                            fill: #fff;
+                        }
+                    }
+                }
+            }
+
+            &-footer {
+                border-top-color: #4e536d;
+            }
+
+            * > i {
+                path {
+                    fill: #bfbfbf;
+                }
+            }
+
+            .dialogs {
+                & > * > * {
+                    color: #bfbfbf;
+                }
+
+                input {
+                    background-color: #2f334d;
+                }
+
+                &__item {
+                    &--selected {
+                        background-color: #476eef;
+                    }
+
+                    &-info-top {
+                        b {
+                            color: #fff !important;
+                        }
+                    }
+
+                    &:hover {
+                        background-color: #476eef;
+                    }
+                }
+            }
+        }
+
+        .ant-empty-description {
+            color: #bfbfbf;
+        }
+
+        &__dialog-header {
+            border-bottom-color: #4e536d;
+
+            &-username {
+                color: #fff;
+            }
+
+            &-action {
+                i {
+                    path {
+                        fill: #bfbfbf;
+                    }
+                }
+            }
+        }
+
+        &__dialog-messages {
+            .message {
+                &__bubble {
+                    background-color: #476eef;
+                }
+
+                .message__created-at {
+                    color: #fff;
+                }
+
+                &--isme {
+                    .message__icon-actions {
+                        i {
+                            path {
+                                fill: #fff;
+                            }
+                        }
+                    }
+
+                    .message__bubble {
+                        border-color: #2f334d;
+                        background-color: #2f334d;
+
+                        .message__text {
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+        }
+
+        &__dialog-input {
+            .chat-input {
+                i {
+                    path {
+                        fill: #fff;
+                    }
+                }
+
+                .ant-input {
+                    background-color: #2f334d;
+                    color: #fff;
+                    border-color: #476eef;
+                }
+            }
+        }
+    }
 }

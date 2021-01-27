@@ -33,7 +33,8 @@
         }
 
         &-dialogs {
-            height: calc(100% - 136px);
+            margin-bottom: 20px;
+            height: calc(100% - 276px);
 
             .dialogs {
                 height: 100%;
@@ -42,7 +43,20 @@
                     padding: 10px 20px;
                     margin-bottom: 0;
                     cursor: pointer;
+                    transition: background-color 0.4s ease-in-out;
                 }
+            }
+        }
+
+        &-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            padding-top: 21px;
+            border-top: 1px solid #f7f7f7;
+
+            .ReactFlagsSelect-module_flagsSelect__2pfa2 {
+                padding-bottom: 0;
             }
         }
     }
