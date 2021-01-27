@@ -6,11 +6,22 @@ import { DialogItem } from "../";
 
 import "./Dialogs.scss";
 
-const Dialogs = ({ items, userId, onSearch, inputValue, currentDialogId }) => (
+const Dialogs = ({
+    items,
+    userId,
+    onSearch,
+    inputValue,
+    currentDialogId,
+    selectedLang,
+}) => (
     <div className="dialogs">
         <div className="dialogs__search">
             <Input.Search
-                placeholder="Search among contacts"
+                placeholder={
+                    selectedLang === "US"
+                        ? "Search among contacts"
+                        : "Поиск среди контактов"
+                }
                 onChange={(e) => onSearch(e.target.value)}
                 value={inputValue}
             />
@@ -23,6 +34,7 @@ const Dialogs = ({ items, userId, onSearch, inputValue, currentDialogId }) => (
                     userId={userId}
                     currentDialogId={currentDialogId}
                     {...item}
+                    selectedLang={selectedLang}
                 />
             ))
         ) : (

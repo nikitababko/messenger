@@ -6,7 +6,7 @@ import { Button, Popover } from "antd";
 
 import "./Status.scss";
 
-const Status = ({ online, fullname }) => (
+const Status = ({ online, fullname, selectedLang }) => (
     <div className="chat__dialog-header">
         <div className="chat__dialog-header-center">
             <b className="chat__dialog-header-username">{fullname}</b>
@@ -21,7 +21,9 @@ const Status = ({ online, fullname }) => (
             className="chat__dialog-header-action"
             content={
                 <div>
-                    <Button>Delete dialog</Button>
+                    <Button>
+                        {selectedLang === "US" ? "Delete dialog" : "Удалить диалог"}
+                    </Button>
                 </div>
             }
             trigger="click"

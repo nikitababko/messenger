@@ -17,6 +17,7 @@ const Dialogs = ({
     isLoading,
     removeMessageById,
     attachments,
+    selectedLang,
 }) => {
     if (!currentDialog) {
         return <Empty description="Open dialog" />;
@@ -83,6 +84,7 @@ const Dialogs = ({
                     ? currentDialog.author
                     : currentDialog.partner
             }
+            selectedLang={selectedLang}
         />
     );
 };

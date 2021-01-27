@@ -1,6 +1,9 @@
 import React from "react";
+import ReactFlagsSelect from "react-flags-select";
 import { Icon, Button, Modal, Select, Input, Form, Popover } from "antd";
 import { Dialogs } from "containers";
+
+import { ThemeToggler } from "../";
 
 import "./Sidebar.scss";
 
@@ -23,6 +26,9 @@ const Sidebar = ({
     onChangeTextArea,
     logOut,
     onModalOk,
+    onChangeTheme,
+    selectedLang,
+    setSelectedLang,
 }) => {
     const options = users.map((user) => <Option key={user._id}>{user.fullname}</Option>);
 
@@ -32,7 +38,9 @@ const Sidebar = ({
                 <Popover
                     content={
                         <div>
-                            <Button onClick={logOut}>Выйти</Button>
+                            <Button onClick={logOut}>
+                                {selectedLang === "US" ? "Log out" : "Выйти"}
+                            </Button>
                         </div>
                     }
                     trigger="click"
@@ -43,22 +51,28 @@ const Sidebar = ({
                 </Popover>
                 <div>
                     <Icon type="team" />
-                    <span>Dialogs's list</span>
+                    <span>
+                        {selectedLang === "US" ? "Dialogs's list" : "Список диалогов"}
+                    </span>
                 </div>
                 <Button onClick={onShow} type="link" shape="circle" icon="form" />
             </div>
 
             <div className="chat__sidebar-dialogs">
-                <Dialogs userId={user && user._id} />
+                <Dialogs
+                    selectedLang={selectedLang}
+                    setSelectedLang={setSelectedLang}
+                    userId={user && user._id}
+                />
             </div>
 
             <Modal
-                title="Create dialog"
+                title={selectedLang === "US" ? "Create dialog" : "Создать диалог"}
                 visible={visible}
                 onCancel={onClose}
                 footer={[
                     <Button key="back" onClick={onClose}>
-                        Close
+                        {selectedLang === "US" ? "Close" : "Закрыть"}
                     </Button>,
                     <Button
                         disabled={!messageText}
@@ -67,12 +81,18 @@ const Sidebar = ({
                         loading={isLoading}
                         onClick={onModalOk}
                     >
-                        Create
+                        {selectedLang === "US" ? "Create" : "Создать"}
                     </Button>,
                 ]}
             >
                 <Form className="add-dialog-form">
-                    <Form.Item label="Enter username or email">
+                    <Form.Item
+                        label={
+                            selectedLang === "US"
+                                ? "Enter username or email"
+                                : "Введите имя пользователя или почту"
+                        }
+                    >
                         <Select
                             value={inputValue}
                             onSearch={onSearch}
@@ -83,14 +103,24 @@ const Sidebar = ({
                             defaultActiveFirstOption={false}
                             showArrow={false}
                             filterOption={false}
-                            placeholder="Введите имя пользователя или почту"
+                            placeholder={
+                                selectedLang === "US"
+                                    ? "Enter username or email"
+                                    : "Введите имя пользователя или почту"
+                            }
                             showSearch
                         >
                             {options}
                         </Select>
                     </Form.Item>
                     {selectedUserId && (
-                        <Form.Item label="Enter your message">
+                        <Form.Item
+                            label={
+                                selectedLang === "US"
+                                    ? "Enter your message"
+                                    : "Введите ваше сообщение"
+                            }
+                        >
                             <TextArea
                                 autosize={{ minRows: 3, maxRows: 10 }}
                                 onChange={onChangeTextArea}
@@ -100,6 +130,16 @@ const Sidebar = ({
                     )}
                 </Form>
             </Modal>
+            <div className="chat__sidebar-footer">
+                <ReactFlagsSelect
+                    selected={selectedLang}
+                    onSelect={(code) => setSelectedLang(code)}
+                    placeholder="Select Language"
+                    fullWidth={false}
+                    countries={["US", "RU"]}
+                />
+                <ThemeToggler onChangeTheme={onChangeTheme} />
+            </div>
         </div>
     );
 };

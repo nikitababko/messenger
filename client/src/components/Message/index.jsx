@@ -99,6 +99,7 @@ const Message = ({
     onRemoveMessage,
     setPreviewImage,
     mesCreatedAt,
+    selectedLang,
 }) => {
     const renderAttachment = (item) => {
         if (item.ext !== "webm") {
@@ -138,7 +139,11 @@ const Message = ({
                 <Popover
                     content={
                         <div>
-                            <Button onClick={onRemoveMessage}>Delete message</Button>
+                            <Button onClick={onRemoveMessage}>
+                                {selectedLang === "US"
+                                    ? "Delete message"
+                                    : "Удалить сообщение"}
+                            </Button>
                         </div>
                     }
                     trigger="click"

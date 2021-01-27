@@ -15,6 +15,7 @@ const ChatInput = (props) => {
         setAttachments,
         removeAttachment,
         user,
+        selectedLang,
     } = props;
 
     if (!currentDialogId) {
@@ -175,6 +176,7 @@ const ChatInput = (props) => {
             onHideRecording={onHideRecording}
             isLoading={isLoading}
             removeAttachment={removeAttachment}
+            selectedLang={selectedLang}
         />
     );
 };

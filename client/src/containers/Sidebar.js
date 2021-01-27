@@ -4,7 +4,7 @@ import { userApi, dialogsApi } from "utils/api";
 
 import { Sidebar } from "components";
 
-const SidebarContainer = ({ user }) => {
+const SidebarContainer = ({ user, onChangeTheme, selectedLang, setSelectedLang }) => {
     const [visible, setVisible] = useState(false);
     const [inputValue, setInputValue] = useState("");
     const [messageText, setMessagaText] = useState("");
@@ -79,6 +79,9 @@ const SidebarContainer = ({ user }) => {
             messageText={messageText}
             selectedUserId={selectedUserId}
             users={users}
+            onChangeTheme={onChangeTheme}
+            selectedLang={selectedLang}
+            setSelectedLang={setSelectedLang}
         />
     );
 };

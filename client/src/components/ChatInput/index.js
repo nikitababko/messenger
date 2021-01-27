@@ -26,6 +26,7 @@ const ChatInput = (props) => {
         onHideRecording,
         removeAttachment,
         isLoading,
+        selectedLang,
     } = props;
 
     return (
@@ -51,7 +52,7 @@ const ChatInput = (props) => {
                     {isRecording ? (
                         <div className="chat-input__record-status">
                             <i className="chat-input__record-status-bubble"></i>
-                            Recording...
+                            {selectedLang === "US" ? "Recording..." : "Идет запись..."}
                             <Button
                                 onClick={onHideRecording}
                                 type="link"
@@ -65,7 +66,11 @@ const ChatInput = (props) => {
                             onChange={(e) => setValue(e.target.value)}
                             onKeyUp={handleSendMessage}
                             size="large"
-                            placeholder="Enter your message…"
+                            placeholder={
+                                selectedLang === "US"
+                                    ? "Enter your message…"
+                                    : "Введите ваше сообщение..."
+                            }
                             value={value}
                             autosize={{ minRows: 1, maxRows: 6 }}
                             onPressEnter={(e) => e.preventDefault()}

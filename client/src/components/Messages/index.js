@@ -19,6 +19,7 @@ const Messages = ({
     blockHeight,
     isTyping,
     partner,
+    selectedLang,
 }) => {
     return (
         <div
@@ -41,6 +42,7 @@ const Messages = ({
                                 setPreviewImage={setPreviewImage}
                                 key={item._id}
                                 mesCreatedAt={item.createdAt}
+                                selectedLang={selectedLang}
                             />
                         ))
                     ) : (
