@@ -64,5 +64,5 @@ Into file `.env` you need to specify parameters for Cloudinary API. Follow the l
   <h3>Black theme</h3>
   <img style="margin-bottom:50px;" src="./client/src/assets/img/readme/2.jpg" />
   <h3>Emoji</h3>
-  <img style="margin-bottom:50px;" src="./client/src/assets/img/readme/3.jpg" />
+  <img style="margin-bottom:50px;" src="./client/src/assets/img/readme/3.JPG" />
 </div>
