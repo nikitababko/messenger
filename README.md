@@ -1,3 +1,7 @@
+# Messenger
+
+[You can see screenshots of the messenger below](#screenshots)
+
 ## Install
 
 1. `npm install` или `yarn install`
@@ -51,3 +55,7 @@ Into file `.env` you need to specify parameters for Cloudinary API. Follow the l
 -   Socket.io
 -   JWT
 -   Cloudinary
+
+## <a name="screenshots">Screeshots</a>
+
+test
