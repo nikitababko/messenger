@@ -17,16 +17,16 @@ const Home = (props) => {
     }, [props.location.pathname]);
 
     // Change theme
-    const [theme, setTheme] = useState(false);
+    const [themeApp, setThemeApp] = useState(false);
     const onChangeTheme = () => {
-        setTheme(!theme);
+        setThemeApp(!themeApp);
     };
 
     // Change lang
     const [selectedLang, setSelectedLang] = useState("US");
 
     return (
-        <section className={classNames("home", { "home--dark": theme })}>
+        <section className={classNames("home", { "home--dark": themeApp })}>
             <div className="chat">
                 <Sidebar
                     onChangeTheme={onChangeTheme}
