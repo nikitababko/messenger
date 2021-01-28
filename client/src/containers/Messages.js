@@ -20,7 +20,11 @@ const Dialogs = ({
     selectedLang,
 }) => {
     if (!currentDialog) {
-        return <Empty description="Open dialog" />;
+        return (
+            <Empty
+                description={selectedLang === "US" ? "Open dialog" : "Открыть диалог"}
+            />
+        );
     }
 
     const [previewImage, setPreviewImage] = useState(null);
