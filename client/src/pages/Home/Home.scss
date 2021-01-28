@@ -1,5 +1,20 @@
+$border-color: #4e536d;
+$text-gray: #bfbfbf;
+$blue: #476eef;
+
 .home {
     height: 100%;
+}
+
+.theme-toggler {
+    .label {
+        background-color: #6ab9d6;
+        transition: background-color 0.4s ease-in-out;
+
+        .fa-sun {
+            color: #ffd073;
+        }
+    }
 }
 
 // Black theme
@@ -14,14 +29,14 @@
 
     .chat {
         &__sidebar {
-            border-right-color: #4e536d;
+            border-right-color: $border-color;
 
             &-header {
-                border-bottom-color: #4e536d;
+                border-bottom-color: $border-color;
 
                 i,
                 span {
-                    color: #bfbfbf;
+                    color: $text-gray;
                 }
 
                 .ant-btn {
@@ -34,18 +49,24 @@
             }
 
             &-footer {
-                border-top-color: #4e536d;
+                border-top-color: $border-color;
+
+                .theme-toggler {
+                    .label {
+                        background-color: #111;
+                    }
+                }
             }
 
             * > i {
                 path {
-                    fill: #bfbfbf;
+                    fill: $text-gray;
                 }
             }
 
             .dialogs {
                 & > * > * {
-                    color: #bfbfbf;
+                    color: $text-gray;
                 }
 
                 input {
@@ -54,7 +75,7 @@
 
                 &__item {
                     &--selected {
-                        background-color: #476eef;
+                        background-color: $blue;
                     }
 
                     &-info-top {
@@ -64,18 +85,18 @@
                     }
 
                     &:hover {
-                        background-color: #476eef;
+                        background-color: $blue;
                     }
                 }
             }
         }
 
         .ant-empty-description {
-            color: #bfbfbf;
+            color: $text-gray;
         }
 
         &__dialog-header {
-            border-bottom-color: #4e536d;
+            border-bottom-color: $border-color;
 
             &-username {
                 color: #fff;
@@ -84,7 +105,7 @@
             &-action {
                 i {
                     path {
-                        fill: #bfbfbf;
+                        fill: $text-gray;
                     }
                 }
             }
@@ -93,7 +114,7 @@
         &__dialog-messages {
             .message {
                 &__bubble {
-                    background-color: #476eef;
+                    background-color: $blue;
                 }
 
                 .message__created-at {
@@ -132,7 +153,7 @@
                 .ant-input {
                     background-color: #2f334d;
                     color: #fff;
-                    border-color: #476eef;
+                    border-color: $blue;
                 }
             }
         }
