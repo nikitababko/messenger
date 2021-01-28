@@ -56,7 +56,7 @@ Into file `.env` you need to specify parameters for Cloudinary API. Follow the l
 -   JWT
 -   Cloudinary
 
-## <a name="screenshots">Screeshots</a>
+## <a name="screenshots">Screenshots</a>
 
 <div align="center" >
   <h3>White theme</h3>
