@@ -20,7 +20,7 @@ const RegisterForm = (props) => {
   return (
     <div>
       <div className="auth__top">
-        <h2>Sign in</h2>
+        <h2>Sign up</h2>
         <p>To enter the chat, you need to register</p>
       </div>
       <Block>
