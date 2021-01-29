@@ -36,33 +36,41 @@ Into file `.env` you need to specify parameters for Cloudinary API. Follow the l
 
 **Frontend:**
 
--   ReactJS
--   Redux
--   React Router
--   Axios
--   Ant Design
--   date-fns
--   Formik
+- ReactJS
+- Redux
+- React Router
+- Axios
+- Ant Design
+- date-fns
+- Formik
 
 **Backend:**
 
--   NodeJS
--   TypeScript
--   Express
--   Mongoose
--   Multer
--   Nodemailer
--   Socket.io
--   JWT
--   Cloudinary
+- NodeJS
+- TypeScript
+- Express
+- Mongoose
+- Multer
+- Nodemailer
+- Socket.io
+- JWT
+- Cloudinary
 
 ## <a name="screenshots">Screenshots</a>
 
 <div align="center" >
-  <h3>White theme</h3>
-  <img style="margin:50px 0;" src="./client/src/assets/img/readme/1.jpg" />
-  <h3>Black theme</h3>
-  <img style="margin-bottom:50px;" src="./client/src/assets/img/readme/2.jpg" />
+  <h3>Sign in</h3>
+  <img style="margin:50px 0;" src="screenshots/signin.jpg" />
+ 
+  <h3>Sign up</h3>
+  <img style="margin:50px 0;" src="screenshots/signup.jpg" />
+  
+  <h3>Home - white theme</h3>
+  <img style="margin:50px 0;" src="screenshots/white-theme.jpg" />
+  
+  <h3>Home - black theme</h3>
+  <img style="margin:50px 0;" src="screenshots/black-theme.jpg" />
+  
   <h3>Emoji</h3>
-  <img style="margin-bottom:50px;" src="./client/src/assets/img/readme/3.jpg" />
+  <img style="margin:50px 0;" src="screenshots/emoji.jpg" />
 </div>
