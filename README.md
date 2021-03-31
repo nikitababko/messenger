@@ -17,7 +17,26 @@ I use `nodemailer`. But can use to any SMTP-server.
 2. Enter to your account on this service.
 3. In list "Inboxes" open "Demo inbox".
 4. Get your information about your SMTP or POP3-server.
-5. Open file `.env`.
+5. Create `.env` file at `server/` and enter your values in it. More on this below.
+
+   ```
+    NODE_ENV=development
+    PORT=3003
+
+    JWT_SECRET=
+    JWT_MAX_AGE=
+
+    NODEMAILER_HOST=
+    NODEMAILER_PORT=
+    NODEMAILER_USER=
+    NODEMAILER_PASS=
+
+    CLOUDINARY_NAME=
+    CLOUDINARY_API_KEY=
+    CLOUDINARY_API_SECRET=
+
+   ```
+
 6. Specify in the `NODEMAILER_HOST` and etc the data that gave you mailtrap.io.
 7. Restart your backend.
 8. After every registration of an account in chat, in section "Demo inbox" (Mailtrap) you will receive confirmation emails.
